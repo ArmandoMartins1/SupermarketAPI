@@ -10,11 +10,11 @@ namespace SupermarketAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SupermarketContext>(options =>
-                options.UseMySql("Server=localhost;Database=supermarket;User=root;Password=D@viguabiraba2;", 
+                options.UseMySql("Server=localhost;Database=supermarket;User=root;Password=D@viguabiraba2;",
                 new MySqlServerVersion(new Version(8, 0, 21))));
 
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
-            services.AddScoped<ProdutoService>();
+            services.AddScoped<IProdutoService, ProdutoService>();
 
             services.AddControllers();
             services.AddEndpointsApiExplorer();
@@ -30,7 +30,12 @@ namespace SupermarketAPI
             }
 
             app.UseHttpsRedirection();
+            app.UseRouting();
             app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

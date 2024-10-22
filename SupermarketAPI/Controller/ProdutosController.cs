@@ -15,6 +15,7 @@ namespace SupermarketAPI.Controllers
             _produtoService = produtoService;
         }
 
+        // Retorna todos os produtos
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -22,14 +23,18 @@ namespace SupermarketAPI.Controllers
             return Ok(produtos);
         }
 
+        // Retorna um produto pelo ID
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             var produto = _produtoService.GetById(id);
-            if (produto == null) return NotFound(new { message = "Produto não encontrado" });
+            if (produto == null)
+                return NotFound(new { message = "Produto não encontrado" });
+
             return Ok(produto);
         }
 
+        // Cria um novo produto
         [HttpPost]
         public IActionResult Create([FromBody] ProdutoDTO produtoDTO)
         {
@@ -40,6 +45,7 @@ namespace SupermarketAPI.Controllers
             return CreatedAtAction(nameof(GetById), new { id = produtoDTO.Nome }, produtoDTO);
         }
 
+        // Atualiza um produto existente
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] ProdutoDTO produtoDTO)
         {
@@ -54,6 +60,7 @@ namespace SupermarketAPI.Controllers
             return NoContent();
         }
 
+        // Deleta um produto existente
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

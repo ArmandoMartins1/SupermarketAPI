@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SupermarketAPI.Services
 {
-    public class ProdutoService
+    public class ProdutoService : IProdutoService
     {
         private readonly IProdutoRepository _produtoRepository;
 

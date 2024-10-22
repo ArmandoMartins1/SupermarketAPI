@@ -10,4 +10,3 @@ namespace SupermarketAPI.Data
         public DbSet<Produto> Produtos { get; set; }
     }
 }
-
