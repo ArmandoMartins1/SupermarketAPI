@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SupermarketAPI.Repositories
 {
-    public interface IProdutoRepository
+     public interface IProdutoRepository
     {
         IEnumerable<Produto> GetAll();
         Produto? GetById(int id);

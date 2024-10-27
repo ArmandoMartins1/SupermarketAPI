@@ -9,10 +9,14 @@ namespace SupermarketAPI.Controllers
     public class ProdutosController : ControllerBase
     {
         private readonly IProdutoService _produtoService;
+        private readonly IEstoqueService _estoqueService;
+        private readonly IVendaService _vendaService;
 
-        public ProdutosController(IProdutoService produtoService)
+        public ProdutosController(IProdutoService produtoService, IEstoqueService estoqueService, IVendaService vendaService)
         {
             _produtoService = produtoService;
+             _estoqueService = estoqueService;
+            _vendaService = vendaService;
         }
 
         [HttpGet]
@@ -65,6 +69,47 @@ namespace SupermarketAPI.Controllers
 
             _produtoService.Delete(id);
             return NoContent();
+        }
+        [HttpPost("{id}/entrada")]
+        public IActionResult RegistrarEntrada(int id, int quantidade)
+        {
+            try
+            {
+                _estoqueService.RegistrarEntrada(id, quantidade);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("{id}/saida")]
+        public IActionResult RegistrarSaida(int id, int quantidade)
+        {
+            try
+            {
+                _estoqueService.RegistrarSaida(id, quantidade);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("{id}/vender")]
+        public IActionResult RegistrarVenda(int id, int quantidade)
+        {
+            try
+            {
+                _vendaService.RegistrarVenda(id, quantidade);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }

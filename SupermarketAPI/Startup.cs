@@ -1,19 +1,24 @@
 using Microsoft.EntityFrameworkCore;
 using SupermarketAPI.Data;
 using SupermarketAPI.Extensions;
-using SupermarketAPI.Repositories;
-using SupermarketAPI.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace SupermarketAPI
 {
     public class Startup
     {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureDbContext(Configuration);
             services.ConfigureDependencies();
             services.ConfigureSwagger();
-
             services.AddControllers();
             services.AddEndpointsApiExplorer();
         }
@@ -29,17 +34,7 @@ namespace SupermarketAPI
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
-
-        public IConfiguration Configuration { get; }
-
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

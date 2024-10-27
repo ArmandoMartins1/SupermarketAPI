@@ -18,6 +18,8 @@ namespace SupermarketAPI.Extensions
         {
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IProdutoService, ProdutoService>();
+            services.AddScoped<IEstoqueService, EstoqueService>();
+            services.AddScoped<IVendaService, VendaService>();
         }
 
         public static void ConfigureSwagger(this IServiceCollection services)

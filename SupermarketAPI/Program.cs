@@ -1,8 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using SupermarketAPI.Data;
-using SupermarketAPI.Repositories;
-using SupermarketAPI.Services;
-
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -23,4 +18,3 @@ namespace SupermarketAPI
                 });
     }
 }
-

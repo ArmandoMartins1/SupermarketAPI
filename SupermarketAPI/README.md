@@ -81,6 +81,20 @@ Se o projeto compilar e rodar corretamente, a API estará disponível no endere�
 - **Swagger UI**: `http://localhost:5089/swagger` (usado para testar a API)
 - **Ambiente de desenvolvimento**: `https://localhost:7204` (ou `http://localhost:5089` para HTTP)
 
+
+## Resumo de sequências
+Você apaga todos os itens dentro da pasta Migrations e usa:
+```bash
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+dotnet build
+dotnet run
+```
+o migrations vai criar os itens.
+o database update vai aplicar as configuração do banco.
+o build vai dá um check no seu código
+e por final o run irá rodar, em seguida abra o Swagger.
+
 ## Endpoints da API
 
 Abaixo estão os principais endpoints da API que você pode testar diretamente no Swagger UI.
@@ -90,6 +104,9 @@ Abaixo estão os principais endpoints da API que você pode testar diretamente n
 - **POST /api/produtos** - Cria um novo produto.
 - **PUT /api/produtos/{id}** - Atualiza um produto existente.
 - **DELETE /api/produtos/{id}** - Deleta um produto específico.
+- **POST /api/produtos/{id}/entrada** - A entrada serve para modificar a quantidade dos itens existentes com ID’s próprios.
+- **POST /api/produtos/{id}/saida** - A SAÍDA serve para modificar o ITEM EXISTENTE com ID’s próprios sem ser pela venda.
+- **POST /api/produtos/{id}/vender** - A venda serve para modificar a quantidade dos itens existentes com ID’s próprios.
 
 ## Testando a API
 
@@ -138,5 +155,5 @@ Este projeto é licenciado sob os termos da licença MIT.
 Caso queira adicionar dados de exemplo no banco de dados, forneça um script SQL ou implemente um método `Seed` no Entity Framework para adicionar dados de teste automaticamente ao rodar a aplicação.
 
 ### Observação
-Se preferir, você também pode configurar variáveis de ambiente para a string de conexão ao banco de dados, o que torna a configuração ainda mais flexível para diferentes ambientes de desenvolvimento.
+Se preferir, você também pode configurar variáveis de ambiente para a string de conexão ao banco de dados, o que torna a configuração ainda mais flexível para diferentes ambientes de desenvolvimento. 
 
