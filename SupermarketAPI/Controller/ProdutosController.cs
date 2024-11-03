@@ -33,8 +33,17 @@ namespace SupermarketAPI.Controllers
             if (produto == null)
                 return NotFound(new { message = "Produto não encontrado" });
 
-            return Ok(produto);
+            var produtoResponse = new ProdutoResponseDTO
+            {
+                Id = produto.Id,
+                Nome = produto.Nome,
+                Preco = produto.Preco,
+                Quantidade = produto.Quantidade
+            };
+
+            return Ok(produtoResponse);
         }
+
 
         [HttpPost]
         public IActionResult Create([FromBody] ProdutoDTO produtoDTO)
@@ -43,8 +52,10 @@ namespace SupermarketAPI.Controllers
                 return BadRequest(ModelState);
 
             _produtoService.Create(produtoDTO);
-            return CreatedAtAction(nameof(GetById), new { id = produtoDTO.Nome }, produtoDTO);
+            var produtoCriado = _produtoService.GetAll().Last();
+            return CreatedAtAction(nameof(GetById), new { id = produtoCriado.Id }, produtoCriado);
         }
+
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] ProdutoDTO produtoDTO)

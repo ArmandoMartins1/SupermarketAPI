@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using SupermarketAPI.Data;
 using SupermarketAPI.Extensions;
 using Microsoft.Extensions.DependencyInjection;
+using SupermarketAPI.Middleware;
 
 namespace SupermarketAPI
 {
@@ -35,6 +36,7 @@ namespace SupermarketAPI
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseMiddleware<ExceptionMiddleware>();
         }
     }
 }

@@ -5,12 +5,15 @@ namespace SupermarketAPI.Models
     public class ProdutoDTO
     {
         [Required(ErrorMessage = "O nome do produto é obrigatório")]
+        [StringLength(100, ErrorMessage = "O nome não pode exceder 100 caracteres.")]
         public required string Nome { get; set; }
 
-        [Range(0, double.MaxValue, ErrorMessage = "O preço deve ser maior ou igual a 0")]
+        [Required(ErrorMessage = "O preço do produto é obrigatório.")]
+        [Range(0.01, 10000, ErrorMessage = "O preço deve estar entre 0.01 e 10000.")]
         public decimal Preco { get; set; }
 
-        [Range(0, int.MaxValue, ErrorMessage = "A quantidade deve ser maior ou igual a 0")]
+        [Required(ErrorMessage = "A quantidade em estoque é obrigatória.")]
+        [Range(0, int.MaxValue, ErrorMessage = "A quantidade não pode ser negativa.")]
         public int Quantidade { get; set; }
     }
 }

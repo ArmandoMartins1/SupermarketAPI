@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using SupermarketAPI.Models;
 using SupermarketAPI.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,7 +26,7 @@ namespace SupermarketAPI.Services
                 {
                     Id = p.Id,
                     Nome = p.Nome,
-                    Preco = p.Preco,
+                    Preco = Math.Round(p.Preco, 2),
                     Quantidade = p.Quantidade
                 }).ToList();
         }
@@ -44,21 +45,28 @@ namespace SupermarketAPI.Services
             {
                 Id = produto.Id,
                 Nome = produto.Nome,
-                Preco = produto.Preco,
+                Preco = Math.Round(produto.Preco, 2),
                 Quantidade = produto.Quantidade
             };
         }
 
         public void Create(ProdutoDTO produtoDTO)
         {
+            if (produtoDTO == null)
+            {
+                _logger.LogError("Produto nulo não pode ser criado");
+                throw new ArgumentNullException(nameof(produtoDTO), "ProdutoDTO não pode ser nulo.");
+            }
+
             _logger.LogInformation("Criando um novo produto");
             var produto = new Produto
             {
                 Nome = produtoDTO.Nome,
-                Preco = produtoDTO.Preco,
+                Preco = Math.Round(produtoDTO.Preco, 2),
                 Quantidade = produtoDTO.Quantidade
             };
             _produtoRepository.Create(produto);
+            _logger.LogInformation("Produto criado com sucesso");
         }
 
         public void Update(int id, ProdutoDTO produtoDTO)
@@ -68,20 +76,29 @@ namespace SupermarketAPI.Services
             if (produto == null)
             {
                 _logger.LogWarning($"Produto de ID {id} não encontrado");
-                return;
+                throw new ArgumentException($"Produto com ID {id} não encontrado.");
             }
 
             produto.Nome = produtoDTO.Nome;
-            produto.Preco = produtoDTO.Preco;
+            produto.Preco = Math.Round(produtoDTO.Preco, 2);
             produto.Quantidade = produtoDTO.Quantidade;
 
             _produtoRepository.Update(produto);
+            _logger.LogInformation($"Produto de ID {id} atualizado com sucesso");
         }
 
         public void Delete(int id)
         {
             _logger.LogInformation($"Deletando o produto de ID: {id}");
+            var produto = _produtoRepository.GetById(id);
+            if (produto == null)
+            {
+                _logger.LogWarning($"Produto de ID {id} não encontrado para deletar");
+                return;
+            }
+
             _produtoRepository.Delete(id);
+            _logger.LogInformation($"Produto de ID {id} deletado com sucesso");
         }
     }
 }
