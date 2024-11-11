@@ -45,23 +45,23 @@ O projeto contém um arquivo de configuração chamado `appsettings.json` e `app
 
 - Substitua `sua_senha_local` pela senha do usuário root ou outro usuário que você configurou no MySQL.
 
-### 4. Restaurar dependências
+### 4. Configurações da migração para o Banco de Dados.
+CERTIFIQUE-SE DE ESTAR DENTRO DA PASTA CORRETA. (/SupermarketAPI).
 
-No diretório raiz do projeto, execute o seguinte comando para restaurar as dependências do projeto:
-
+Você apaga todos os itens dentro da pasta Migrations e usa:
 ```bash
-dotnet restore
-```
-
-### 5. Aplicar migrações do banco de dados
-
-O projeto utiliza o Entity Framework Core, então as migrações já estão configuradas para criar as tabelas automaticamente. Para aplicar as migrações e criar as tabelas no banco de dados, execute:
-
-```bash
+dotnet ef migrations add InitialCreate
 dotnet ef database update
+dotnet build
+dotnet run
 ```
+o migrations vai criar os itens.
+o database update vai aplicar as configuração do banco.
+o build vai dá um check no seu código
+e por final o run irá rodar, em seguida abra o Swagger.
 
-### 6. Rodar o projeto
+
+### 5. Rodar o projeto
 
 Agora você pode iniciar a aplicação com o seguinte comando:
 
@@ -75,18 +75,6 @@ Se o projeto compilar e rodar corretamente, a API estará disponível no endere�
 - **Ambiente de desenvolvimento**: `https://localhost:7204` (ou `http://localhost:5089` para HTTP)
 
 
-## Resumo de sequências
-Você apaga todos os itens dentro da pasta Migrations e usa:
-```bash
-dotnet ef migrations add InitialCreate
-dotnet ef database update
-dotnet build
-dotnet run
-```
-o migrations vai criar os itens.
-o database update vai aplicar as configuração do banco.
-o build vai dá um check no seu código
-e por final o run irá rodar, em seguida abra o Swagger.
 
 ## Endpoints da API
 
@@ -152,6 +140,7 @@ Se preferir, você também pode configurar variáveis de ambiente para a string 
 
 ### Dados de Exemplo 
 
+```bash
 INSERT INTO produtos (nome, preco, quantidade) VALUES
 ('Arroz', 18.50, 30),
 ('Feijão', 7.90, 50),
@@ -173,6 +162,7 @@ INSERT INTO produtos (nome, preco, quantidade) VALUES
 ('Desodorante', 9.70, 30),
 ('Escova de dentes', 3.50, 40),
 ('Creme dental', 6.20, 35);
+```
 
 ## Testes de Unidade e Integração
 
@@ -197,6 +187,31 @@ Este projeto inclui testes de unidade para a camada de serviços e testes de int
 ### Executando os Testes
 
 Para rodar todos os testes de unidade e de integração, execute o seguinte comando no terminal:
-
+Verifique que você esta na pasta do supermarketapi.tests, logo após: 
 ```bash
 dotnet test
+```
+
+### Desenvolvedores:
+<table style="width:100%">
+  <tr align=center>
+    <th><strong>Davi Guabiraba</strong></th>
+    <th><strong>Armando Alves</strong></th>
+
+
+  </tr>
+  <tr align=center>
+    <td>
+      <a href="https://github.com/DGuabiraba">
+        <img src="https://avatars.githubusercontent.com/u/81264511?v=4">
+      </a>
+    </td>
+    <td>
+            <a href="https://github.com/ArmandoMartins1">
+        <img src="https://avatars.githubusercontent.com/u/133614695?v=4">
+      </a>
+    </td>
+    <td>
+
+</table>
+
